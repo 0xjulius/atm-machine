@@ -1,8 +1,10 @@
 def atm_simulator():
     saldo = 1000.0
-    
+    print("\nTervetuloa Pankkiautomaattiin!")
+
     while True:
-        print("\nTervetuloa Pankkiautomaattiin!")
+
+        print("\nValitse toiminto:")
         print("1. Saldo")
         print("2. Talletus")
         print("3. Otto")
@@ -19,23 +21,28 @@ def atm_simulator():
             try:
                 summa = float(input("Syötä tallettamasi summa: "))
                 if summa > 0:
-                    saldo += summa
-                    print(f"{summa:.2f} € Talletus onnistui!")
+                    if summa >10000:
+                        print("Voit tallettaa enintään 10 000 euroa yhdellä kerralla.")
+                    else:
+                        saldo += summa
+                        print(f"{summa:.2f} € Talletus onnistui!")
                 else:
                     print("Syötä positiivinen numero")
             except ValueError:
-                print("Virhe. Syötä numeerinen arvo.")
+                    print("Virhe. Syötä numeerinen arvo.")
 
         elif valinta == '3':
-            # varojen otto
+            # varojen nosto
             try:
                 summa = float(input("Kuinka paljon haluat nostaa? "))
                 if summa > 0:
-                    if saldo >= summa:
+                    if summa % 5 != 0: #modulo -katsoo, että summa on jaollinen viidellä
+                        print("Yritä uudelleen. Voit nostaa vain seteleitä!")
+                    elif saldo >= summa:
                         saldo -= summa
                         print(f"{summa:.2f} euron nosto onnistui.")
                     else:
-                        print("Nosto epäonnistui. Varoja liian vähän.")
+                        print(f"Nosto epäonnistui. Varoja liian vähän. (Nostoyritys {summa:.2f}. Nykyinen saldo: {saldo:.2f})")
                 else:
                     print("Syötä positiivinen numero.")
             except ValueError:
